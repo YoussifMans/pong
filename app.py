@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 class Game:
     def __init__(self):
@@ -113,27 +114,29 @@ class Game:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.leftPaddle_moving = -3
-                    if event.key == pygame.K_DOWN:
-                        self.leftPaddle_moving = 3
-                    if event.key == pygame.K_w:
                         self.rightPaddle_moving = -3
-                    if event.key == pygame.K_s:
+                    if event.key == pygame.K_DOWN:
                         self.rightPaddle_moving = 3
+                    if event.key == pygame.K_w:
+                        self.leftPaddle_moving = -3
+                    if event.key == pygame.K_s:
+                        self.leftPaddle_moving = 3
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP:
-                        self.leftPaddle_moving = 0
+                        self.rightPaddle_moving = 0
                     if event.key == pygame.K_DOWN:
-                        self.leftPaddle_moving = 0
+                        self.rightPaddle_moving = 0
                     if event.key == pygame.K_w:
-                        self.rightPaddle_moving = 0
+                        self.leftPaddle_moving = 0
                     if event.key == pygame.K_s:
-                        self.rightPaddle_moving = 0
+                        self.leftPaddle_moving = 0
 
             pygame.display.update()
             self.clock.tick(120)
 
     def reset(self):
+        self.leftPaddle_pos = [10, (self.screen.height / 2) - (self.leftPaddle.height / 2)]  
+        self.rightPaddle_pos = [self.screen.width - (10 + self.rightPaddle.width), (self.screen.height / 2) - (self.leftPaddle.height / 2)]
         self.ball_pos[0] = self.screen.width / 2 - self.ball_size[0] / 2
         self.ball_pos[1] = self.screen.height / 2 - self.ball_size[1] / 2
         self.acceleration = [1,0]
@@ -149,6 +152,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+                if event.type == pygame.K_ENTER:
+                    self.reset()
+                    self.run()
             
             pygame.display.update()
             self.clock.tick(1)
@@ -164,6 +170,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+                if event.type == pygame.K_ENTER:
+                    self.reset()
+                    self.run()
+					
             
             pygame.display.update()
             self.clock.tick(1)
